@@ -1,0 +1,49 @@
+<section class="card" id="formView">
+  <h2>Create your account</h2>
+  <p class="sub">Free for 30 days. No card needed. Already registered? <a href="#signin">Sign in</a></p>
+
+  <form id="form" novalidate>
+
+    <div class="field" data-field="name">
+      <label for="name">Full name</label>
+      <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-msg">
+      <p class="msg" id="name-msg" role="alert"></p>
+    </div>
+
+    <div class="field" data-field="email">
+      <label for="email">Work email</label>
+      <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="email-msg">
+      <p class="msg" id="email-msg" role="alert"></p>
+    </div>
+
+    <div class="field" data-field="business">
+      <label for="business">Business name <span class="opt">(optional)</span></label>
+      <input id="business" name="business" type="text" autocomplete="organization">
+    </div>
+
+    <div class="field" data-field="password">
+      <label for="password">Password</label>
+      <div class="ctl">
+        <input id="password" name="password" type="password" autocomplete="new-password" required aria-describedby="password-msg">
+        <button type="button" class="toggle" id="toggle" aria-pressed="false" aria-label="Show password">Show</button>
+      </div>
+      <div class="meter" id="meter" data-s="0" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <p class="msg" id="password-msg" role="alert">Use 10 or more characters with a mix of letters and numbers.</p>
+    </div>
+
+    <div class="field" data-field="terms">
+      <label class="check">
+        <input id="terms" name="terms" type="checkbox" required aria-describedby="terms-msg">
+        <span class="box" aria-hidden="true"></span>
+        <span>I agree to the <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>.</span>
+      </label>
+      <p class="msg" id="terms-msg" role="alert"></p>
+    </div>
+
+    <button class="submit" id="submit" type="submit">Create account</button>
+  </form>
+
+  <p class="legal">We’ll email a confirmation link to verify your address.</p>
+</section>
