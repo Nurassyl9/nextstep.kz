@@ -1,0 +1,254 @@
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #EEF2F5;
+  --surface: #FFFFFF;
+  --text: #0F2438;
+  --muted: #51647A;
+  --line: #C9D4DE;
+  --accent: #F2B01E;
+  --accent-ink: #0F2438;
+  --ok: #1F7A5C;
+  --err: #B3261E;
+  --focus: #2B6CB0;
+  --head: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0A1622;
+    --surface: #112234;
+    --text: #E8EEF4;
+    --muted: #9DB0C3;
+    --line: #2A3F55;
+    --ok: #4FC79B;
+    --err: #FF8A80;
+    --focus: #7DB4F0;
+    color-scheme: dark;
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 5vw, 64px);
+  background: var(--bg);
+  color: var(--text);
+  font: 400 1rem/1.55 var(--body);
+}
+
+[hidden] { display: none !important; }
+
+/* ---------- Card & headings ---------- */
+.card {
+  width: 100%;
+  max-width: 440px;
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font: 800 1.9rem/1.1 var(--head);
+  letter-spacing: -0.025em;
+}
+
+.sub {
+  margin: 0 0 28px;
+  color: var(--muted);
+}
+
+.sub a,
+.legal a,
+.check a {
+  color: var(--text);
+  text-underline-offset: 3px;
+}
+
+/* ---------- Fields ---------- */
+.field { margin-bottom: 18px; }
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.opt {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input:hover { border-color: var(--muted); }
+
+input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 0;
+  border-color: var(--focus);
+}
+
+/* Validation states */
+.field.bad input  { border-color: var(--err); }
+.field.good input { border-color: var(--ok); }
+
+.msg {
+  min-height: 1.2em;
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.field.bad .msg { color: var(--err); }
+
+/* ---------- Password field ---------- */
+.ctl { position: relative; }
+
+input#password { padding-right: 68px; }
+
+.toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  padding: 10px;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--muted);
+  font: 600 0.85rem var(--body);
+  cursor: pointer;
+}
+
+.toggle:hover { color: var(--text); }
+
+.toggle:focus-visible,
+.submit:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Strength meter: JS sets data-s from 0 to 4 */
+.meter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.meter span {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+  transition: background 0.2s;
+}
+
+.meter[data-s="1"] span:nth-child(-n+1) { background: var(--err); }
+.meter[data-s="2"] span:nth-child(-n+2) { background: var(--accent); }
+.meter[data-s="3"] span:nth-child(-n+3) { background: var(--ok); }
+.meter[data-s="4"] span                 { background: var(--ok); }
+
+/* ---------- Custom checkbox ---------- */
+.check {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 0;
+  font-weight: 400;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.check input {
+  position: absolute;
+  opacity: 0;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+
+.box {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+}
+
+.check input:checked + .box {
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.check input:checked + .box::after {
+  content: "";
+  width: 5px;
+  height: 10px;
+  border: solid var(--surface);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.check input:focus-visible + .box {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.field.bad .box { border-color: var(--err); }
+
+/* ---------- Submit button ---------- */
+.submit {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  border-radius: 8px;
+  font: 600 1rem var(--body);
+  cursor: pointer;
+  transition: transform 0.12s, filter 0.15s;
+}
+
+.submit:hover    { filter: brightness(1.06); }
+.submit:active   { transform: translateY(1px); }
+.submit[disabled] { opacity: 0.7; cursor: progress; }
+
+.legal {
+  margin-top: 18px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ---------- Success screen (optional) ---------- */
+.done h2:focus { outline: none; }
+
+/* ---------- Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
