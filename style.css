@@ -1,75 +1,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 /* ---------- Design tokens ---------- */
 :root {
-  --bg: #EEF2F5;
+  --bg: #F3F5F9;
   --surface: #FFFFFF;
-  --text: #0F2438;
-  --muted: #51647A;
-  --line: #C9D4DE;
-  --accent: #F2B01E;
-  --accent-ink: #0F2438;
-  --ok: #1F7A5C;
-  --err: #B3261E;
-  --focus: #2B6CB0;
-  --head: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
-  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --text: #1A2233;
+  --muted: #64708A;
+  --line: #D5DBE6;
+  --primary: #3B5BDB;
+  --primary-hover: #324DC0;
+  --primary-ink: #FFFFFF;
+  --ok: #1F8A5F;
+  --warn: #E0A100;
+  --err: #D32F2F;
+  --focus: rgba(59, 91, 219, 0.35);
+  --shadow: 0 1px 2px rgba(20, 30, 55, 0.06), 0 12px 32px rgba(20, 30, 55, 0.08);
+  --radius: 10px;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0A1622;
-    --surface: #112234;
-    --text: #E8EEF4;
-    --muted: #9DB0C3;
-    --line: #2A3F55;
-    --ok: #4FC79B;
-    --err: #FF8A80;
-    --focus: #7DB4F0;
+    --bg: #0E1420;
+    --surface: #161E2E;
+    --text: #E9EDF5;
+    --muted: #97A3BC;
+    --line: #2B364C;
+    --primary: #5C7CFA;
+    --primary-hover: #7490FF;
+    --primary-ink: #0E1420;
+    --ok: #4CC38A;
+    --warn: #F2B01E;
+    --err: #FF7B72;
+    --focus: rgba(92, 124, 250, 0.4);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.35);
     color-scheme: dark;
   }
 }
 
-/* ---------- Base ---------- */
+/* ---------- Page: everything centered ---------- */
 *, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(24px, 5vw, 64px);
+  align-items: center;       /* vertical center */
+  justify-content: center;   /* horizontal center */
+  padding: 24px 16px;
   background: var(--bg);
   color: var(--text);
-  font: 400 1rem/1.55 var(--body);
+  font: 400 16px/1.5 var(--font);
+  -webkit-font-smoothing: antialiased;
 }
 
 [hidden] { display: none !important; }
 
-/* ---------- Card & headings ---------- */
+/* ---------- Card ---------- */
 .card {
   width: 100%;
   max-width: 440px;
+  padding: 40px 36px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
 }
 
 .card h2 {
   margin: 0 0 8px;
-  font: 800 1.9rem/1.1 var(--head);
-  letter-spacing: -0.025em;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
 }
 
 .sub {
   margin: 0 0 28px;
   color: var(--muted);
+  font-size: 0.95rem;
+  text-align: center;
 }
 
-.sub a,
-.legal a,
-.check a {
-  color: var(--text);
-  text-underline-offset: 3px;
+a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
 }
+
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- Fields ---------- */
 .field { margin-bottom: 18px; }
@@ -77,8 +100,8 @@ body {
 label {
   display: block;
   margin-bottom: 6px;
+  font-size: 0.9rem;
   font-weight: 600;
-  font-size: 0.92rem;
 }
 
 .opt {
@@ -90,102 +113,108 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  min-height: 48px;
-  padding: 12px 14px;
+  height: 46px;
+  padding: 0 14px;
   font: inherit;
   color: var(--text);
   background: var(--surface);
-  border: 1.5px solid var(--line);
-  border-radius: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
+input::placeholder { color: var(--muted); opacity: 0.7; }
+
 input:hover { border-color: var(--muted); }
 
-input:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 0;
-  border-color: var(--focus);
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--focus);
 }
 
-/* Validation states */
+/* Validation states (classes set by the JavaScript) */
 .field.bad input  { border-color: var(--err); }
 .field.good input { border-color: var(--ok); }
+
+.field.bad input:focus { box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.2); }
 
 .msg {
   min-height: 1.2em;
   margin: 6px 0 0;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--muted);
 }
 
 .field.bad .msg { color: var(--err); }
 
-/* ---------- Password field ---------- */
+/* ---------- Password ---------- */
 .ctl { position: relative; }
 
-input#password { padding-right: 68px; }
+input#password { padding-right: 70px; }
 
 .toggle {
   position: absolute;
   top: 50%;
   right: 6px;
   transform: translateY(-50%);
-  padding: 10px;
+  height: 34px;
+  padding: 0 10px;
   background: none;
   border: 0;
   border-radius: 6px;
   color: var(--muted);
-  font: 600 0.85rem var(--body);
+  font: 600 0.82rem var(--font);
   cursor: pointer;
 }
 
-.toggle:hover { color: var(--text); }
+.toggle:hover { color: var(--text); background: var(--bg); }
 
-.toggle:focus-visible,
-.submit:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
+.toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus);
 }
 
 /* Strength meter: JS sets data-s from 0 to 4 */
 .meter {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
+  gap: 6px;
   margin-top: 10px;
 }
 
 .meter span {
-  height: 4px;
-  border-radius: 2px;
+  height: 5px;
+  border-radius: 99px;
   background: var(--line);
-  transition: background 0.2s;
+  transition: background 0.25s;
 }
 
 .meter[data-s="1"] span:nth-child(-n+1) { background: var(--err); }
-.meter[data-s="2"] span:nth-child(-n+2) { background: var(--accent); }
+.meter[data-s="2"] span:nth-child(-n+2) { background: var(--warn); }
 .meter[data-s="3"] span:nth-child(-n+3) { background: var(--ok); }
 .meter[data-s="4"] span                 { background: var(--ok); }
 
-/* ---------- Custom checkbox ---------- */
+/* ---------- Checkbox ---------- */
 .check {
   position: relative;
   display: flex;
   gap: 12px;
   align-items: flex-start;
   margin: 0;
+  font-size: 0.88rem;
   font-weight: 400;
-  font-size: 0.9rem;
+  color: var(--muted);
   cursor: pointer;
 }
 
 .check input {
   position: absolute;
   opacity: 0;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   margin: 0;
+  cursor: pointer;
 }
 
 .box {
@@ -196,59 +225,85 @@ input#password { padding-right: 68px; }
   height: 22px;
   margin-top: 1px;
   background: var(--surface);
-  border: 1.5px solid var(--line);
+  border: 1px solid var(--line);
   border-radius: 6px;
+  transition: background 0.15s, border-color 0.15s;
 }
 
+.check:hover .box { border-color: var(--muted); }
+
 .check input:checked + .box {
-  background: var(--text);
-  border-color: var(--text);
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
 .check input:checked + .box::after {
   content: "";
   width: 5px;
   height: 10px;
-  border: solid var(--surface);
+  border: solid var(--primary-ink);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg) translate(-1px, -1px);
 }
 
-.check input:focus-visible + .box {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
+.check input:focus-visible + .box { box-shadow: 0 0 0 4px var(--focus); }
 
 .field.bad .box { border-color: var(--err); }
 
 /* ---------- Submit button ---------- */
 .submit {
   width: 100%;
-  min-height: 52px;
+  height: 48px;
   margin-top: 8px;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--primary);
+  color: var(--primary-ink);
   border: 0;
-  border-radius: 8px;
-  font: 600 1rem var(--body);
+  border-radius: var(--radius);
+  font: 600 1rem var(--font);
   cursor: pointer;
-  transition: transform 0.12s, filter 0.15s;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
 }
 
-.submit:hover    { filter: brightness(1.06); }
-.submit:active   { transform: translateY(1px); }
-.submit[disabled] { opacity: 0.7; cursor: progress; }
+.submit:hover  { background: var(--primary-hover); }
+.submit:active { transform: translateY(1px); }
+
+.submit:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--focus);
+}
+
+.submit[disabled] {
+  opacity: 0.65;
+  cursor: progress;
+}
 
 .legal {
-  margin-top: 18px;
-  font-size: 0.82rem;
+  margin: 20px 0 0;
+  font-size: 0.8rem;
   color: var(--muted);
+  text-align: center;
 }
 
 /* ---------- Success screen (optional) ---------- */
+.done { text-align: center; }
+
 .done h2:focus { outline: none; }
+
+.done p { color: var(--muted); }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  body { padding: 16px 12px; align-items: flex-start; }
+
+  .card {
+    padding: 28px 20px;
+    border-radius: 14px;
+  }
+
+  .card h2 { font-size: 1.5rem; }
+}
 
 /* ---------- Accessibility ---------- */
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+  * { transition: none !important; animation: none !important; }
 }
